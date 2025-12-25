@@ -1,243 +1,130 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Mail, Phone, ChevronRight } from 'lucide-react';
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { Mail, Phone, ChevronDown, X } from "lucide-react";
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 // --- Utility ---
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-// --- Animation Variants ---
-const navVariants = {
-  hidden: { y: -20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
-  }
-};
-
-const dropdownVariants = {
-  hidden: { opacity: 0, y: 10, scale: 0.95, display: 'none' },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    display: 'block',
-    transition: { duration: 0.2, ease: "easeOut" }
-  },
-  exit: {
-    opacity: 0,
-    y: 5,
-    transition: { duration: 0.15 }
-  }
-};
-
-const mobileMenuVariants = {
-  closed: { height: 0, opacity: 0 },
-  open: {
-    height: 'auto',
-    opacity: 1,
-    transition: {
-      duration: 0.4,
-      ease: [0.04, 0.62, 0.23, 0.98],
-      staggerChildren: 0.1
-    }
-  }
-};
-
-const itemVariants = {
-  closed: { opacity: 0, x: -10 },
-  open: { opacity: 1, x: 0 }
-};
-
-// --- Sub-Components ---
-
-const NavLink = ({ children, href, onClick }: { children: React.ReactNode; href?: string; onClick?: () => void }) => {
-  const Wrapper = href ? Link : 'button';
-  const props = href ? { href } : { onClick, type: 'button' as const };
-
-  return (
-    // @ts-ignore
-    <Wrapper
-      {...props}
-      className="relative group px-2 py-1 text-sm font-medium text-gray-600 transition-colors hover:text-[#1E88E5]"
-    >
-      {children}
-      <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-[#1E88E5] transition-all duration-300 ease-out group-hover:w-full" />
-    </Wrapper>
-  );
-};
-
-// --- Main Component ---
-
 export default function Navbar() {
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [isContactHovered, setIsContactHovered] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [showContact, setShowContact] = useState(false);
 
-  const handleScrollToAbout = () => {
-    const aboutSection = document.getElementById('about');
-    if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: 'smooth' });
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleHomeClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.location.reload();
+  };
+
+  const handleScrollToSection = (id: string) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
     }
-    setIsMobileOpen(false);
   };
 
   return (
-    <motion.nav
-      initial="hidden"
-      animate="visible"
-      variants={navVariants}
-      className="fixed top-0 left-0 right-0 z-50 w-full bg-white backdrop-blur-md border-b border-gray-100/50 shadow-sm"
+    <nav
+      className={cn(
+        "fixed top-0 left-0 right-0 z-[200] transition-all duration-500 bg-white border-b",
+        isScrolled
+          ? "py-3 shadow-sm border-gray-100"
+          : "py-5 border-transparent"
+      )}
     >
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 sm:h-20">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
 
-          {/* --- LEFT: Brand --- */}
-          <div className="flex-shrink-0 cursor-pointer group">
-            <Link href="/" aria-label="Home" className="flex items-center gap-3">
-              <img
-                src="/image.png"
-                alt="Drink It Logo"
-                className="h-10 sm:h-12 w-auto object-contain"
-              />
-
-            </Link>
-          </div>
-
-          {/* --- CENTER: Desktop Links --- */}
-          <div className="hidden md:flex items-center space-x-8">
-            <NavLink href="/">Home</NavLink>
-            <NavLink onClick={handleScrollToAbout}>About Us</NavLink>
-          </div>
-
-          {/* --- RIGHT: CTA (Desktop) --- */}
-          <div className="hidden md:flex items-center relative">
-            <div
-              className="relative"
-              onMouseEnter={() => setIsContactHovered(true)}
-              onMouseLeave={() => setIsContactHovered(false)}
-            >
-              <motion.button
-                whileHover={{ scale: 1.02, y: -1 }}
-                whileTap={{ scale: 0.98 }}
-                className={cn(
-                  "px-6 py-2.5 rounded-lg text-sm font-semibold text-white",
-                  "bg-[#1E88E5] shadow-md hover:shadow-lg transition-all duration-300",
-                  "focus:outline-none focus:ring-2 focus:ring-[#1E88E5] focus:ring-offset-2"
-                )}
-              >
-                Contact Us
-              </motion.button>
-
-              {/* Hover Dropdown */}
-              <AnimatePresence>
-                {isContactHovered && (
-                  <motion.div
-                    variants={dropdownVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    className="absolute right-0 top-full mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-100 p-4 z-50 overflow-hidden"
-                    style={{ transformOrigin: "top right" }}
-                  >
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors cursor-default">
-                        <div className="p-2 bg-blue-50 rounded-full text-[#1E88E5]">
-                          <Mail size={18} />
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-xs text-gray-400 font-medium uppercase tracking-wider">Email</span>
-                          <span className="text-sm font-medium text-gray-800">hello@drinkit.com</span>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors cursor-default">
-                        <div className="p-2 bg-blue-50 rounded-full text-[#1E88E5]">
-                          <Phone size={18} />
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-xs text-gray-400 font-medium uppercase tracking-wider">Phone</span>
-                          <span className="text-sm font-medium text-gray-800">+1 (555) 000-0000</span>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
-
-          {/* --- RIGHT: Mobile Hamburger --- */}
-          <div className="flex md:hidden">
-            <button
-              onClick={() => setIsMobileOpen(!isMobileOpen)}
-              className="p-2 text-gray-600 hover:text-[#1E88E5] focus:outline-none transition-colors"
-              aria-label="Toggle Menu"
-            >
-              {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
+        {/* --- Logo --- */}
+        <div className="flex-shrink-0">
+          <Link href="/" onClick={handleHomeClick} className="flex items-center">
+            <img src="/logo-img.png" alt="Logo" className="h-10 md:h-12 w-auto object-contain" />
+          </Link>
         </div>
+
+        {/* --- Navigation Links --- */}
+        <div className="hidden md:flex items-center gap-12">
+          {['Home', 'About-us', 'Products'].map((item) => (
+            <button
+              key={item}
+              onClick={item === 'Home' ? handleHomeClick : () => handleScrollToSection(item.toLowerCase().replace('-us', ''))}
+              className="group relative py-1"
+            >
+              <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 group-hover:text-black transition-colors duration-300">
+                {item}
+              </span>
+              <span className="absolute bottom-0 left-0 w-0 h-px bg-black group-hover:w-full transition-all duration-500 ease-in-out" />
+            </button>
+          ))}
+        </div>
+
+        {/* --- Contact Portal --- */}
+        <div className="relative">
+          <button
+            onClick={() => setShowContact(!showContact)}
+            className={cn(
+              "flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[0.2em] transition-all duration-300 px-7 py-3 rounded-full border border-gray-100",
+              showContact
+                ? "bg-blue-600 border-blue-600 text-white"
+                : "bg-white text-black hover:border-black shadow-xs hover:shadow-md"
+            )}
+          >
+            {showContact ? "Close" : "Contact us"}
+            {showContact ? <X size={14} /> : <Mail size={14} />}
+          </button>
+
+          {/* Contact Dropdown */}
+          {showContact && (
+            <div className="absolute top-full right-0 mt-4 w-72 bg-white border border-gray-100 rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.1)] p-8 flex flex-col gap-6 transform-gpu animate-in fade-in slide-in-from-top-4 duration-300">
+              <div className="space-y-6">
+                <div className="flex items-center gap-5">
+                  <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
+                    <Mail size={16} />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-[9px] font-bold text-gray-300 uppercase tracking-widest">Connect via Email</span>
+                    <a href="mailto:hello@drinkit.com" className="text-sm font-bold text-black hover:text-blue-600 transition-colors">hello@drinkit.com</a>
+                  </div>
+                </div>
+                <div className="flex items-center gap-5">
+                  <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
+                    <Phone size={16} />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-[9px] font-bold text-gray-300 uppercase tracking-widest">Direct Line</span>
+                    <a href="tel:+15550000000" className="text-sm font-bold text-black hover:text-blue-600 transition-colors">+1 (555) 000-0000</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
       </div>
 
-      {/* --- MOBILE MENU --- */}
-      <AnimatePresence>
-        {isMobileOpen && (
-          <motion.div
-            variants={mobileMenuVariants}
-            initial="closed"
-            animate="open"
-            exit="closed"
-            className="md:hidden overflow-hidden bg-white border-t border-gray-100"
+      {/* --- Mobile Minimal Links --- */}
+      <div className="md:hidden flex space-x-10 justify-center mt-4 border-t border-gray-50 pt-3">
+        {['Home', 'About-us', 'Products'].map((item) => (
+          <button
+            key={item}
+            onClick={item === 'Home' ? handleHomeClick : () => handleScrollToSection(item.toLowerCase().replace('-us', ''))}
+            className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400 active:text-black"
           >
-            <div className="px-4 py-6 space-y-6">
-
-              {/* Navigation Links */}
-              <div className="space-y-4">
-                <motion.div variants={itemVariants}>
-                  <Link
-                    href="/"
-                    onClick={() => setIsMobileOpen(false)}
-                    className="flex items-center justify-between text-lg font-medium text-gray-800 hover:text-[#1E88E5]"
-                  >
-                    Home
-                    <ChevronRight size={16} className="text-gray-400" />
-                  </Link>
-                </motion.div>
-                <motion.div variants={itemVariants}>
-                  <button
-                    onClick={handleScrollToAbout}
-                    className="flex w-full items-center justify-between text-lg font-medium text-gray-800 hover:text-[#1E88E5]"
-                  >
-                    About Us
-                    <ChevronRight size={16} className="text-gray-400" />
-                  </button>
-                </motion.div>
-              </div>
-
-              <div className="w-full h-[1px] bg-gray-100" />
-
-              {/* Embedded Contact Info for Mobile */}
-              <motion.div variants={itemVariants} className="space-y-4">
-                <h3 className="text-sm font-semibold text-[#1E88E5] uppercase tracking-wider">Get in touch</h3>
-                <a href="mailto:hello@drinkit.com" className="flex items-center gap-3 text-gray-600 hover:text-gray-900">
-                  <Mail size={18} />
-                  <span>hello@drinkit.com</span>
-                </a>
-                <a href="tel:+15550000000" className="flex items-center gap-3 text-gray-600 hover:text-gray-900">
-                  <Phone size={18} />
-                  <span>+1 (555) 000-0000</span>
-                </a>
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+            {item}
+          </button>
+        ))}
+      </div>
+    </nav>
   );
 }
