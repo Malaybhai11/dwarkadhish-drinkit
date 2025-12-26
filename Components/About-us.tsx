@@ -113,21 +113,23 @@ const AboutUs = () => {
                         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                         className="relative"
                     >
-                        <div className="relative rounded-[3rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] aspect-square lg:aspect-auto lg:h-[700px]">
-                            <img
-                                src="/about-splash.png"
+                        <div className="relative rounded-[3rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] aspect-square lg:aspect-auto lg:h-[700px] bg-linear-to-br from-blue-50 via-white to-blue-50/30 flex items-center justify-center p-12">
+                            <motion.img
+                                initial={{ y: 20, opacity: 0 }}
+                                whileInView={{ y: 0, opacity: 1 }}
+                                transition={{ delay: 0.2, duration: 0.8 }}
+                                src="/3imgs_bg_removed.png.png"
                                 alt="Pure Water Essence"
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.1)]"
                             />
-                            <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent" />
 
                             {/* Floating ID Card / Stat */}
                             <motion.div
                                 animate={{ y: [0, -20, 0] }}
                                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                                className="absolute bottom-12 left-12 right-12 bg-white/10 backdrop-blur-2xl border border-white/20 p-8 rounded-3xl"
+                                className="absolute bottom-12 left-12 right-12 bg-white/40 backdrop-blur-2xl border border-white/40 p-8 rounded-3xl shadow-xl"
                             >
-                                <div className="flex justify-between items-center text-white">
+                                <div className="flex justify-between items-center text-blue-900">
                                     {stats.map((stat, i) => (
                                         <div key={i} className="text-center">
                                             <p className="text-[10px] font-bold uppercase tracking-widest opacity-60 mb-1">{stat.label}</p>
@@ -188,7 +190,7 @@ const AboutUs = () => {
                     </div>
                 </div>
 
-              
+
 
             </div>
         </section>

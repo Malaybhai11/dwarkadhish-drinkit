@@ -165,8 +165,8 @@ export default function HeroSection() {
                       className="grid grid-cols-1 md:grid-cols-2 gap-4"
                     >
                       {[
-                        { icon: Mail, label: "Email Correspondence", val: "hello@drinkit.com", href: "mailto:hello@drinkit.com" },
-                        { icon: Phone, label: "Direct Support Line", val: "+1 (555) 000-0000", href: "tel:+15550000000" }
+                        { icon: Mail, label: "Email Correspondence", val: "drinkit@gmail.com", href: "mailto:drinkit@gmail.com" },
+                        { icon: Phone, label: "Direct Support Line", val: "7698989392", href: "tel:7698989392" }
                       ].map((item, i) => (
                         <motion.a
                           key={i}
@@ -179,7 +179,7 @@ export default function HeroSection() {
                           </div>
                           <div>
                             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">{item.label}</p>
-                            <p className="text-lg font-bold text-black group-hover:text-blue-600 transition-colors uppercase tracking-tight">{item.val}</p>
+                            <p className="text-lg font-bold text-black group-hover:text-blue-600 transition-colors  tracking-tight">{item.val}</p>
                           </div>
                         </motion.a>
                       ))}

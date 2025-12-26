@@ -86,7 +86,7 @@ export default function Footer() {
                                 <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500 shadow-sm">
                                     <Phone className="w-4 h-4" />
                                 </div>
-                                <span className="text-sm font-bold text-gray-900 tracking-tight transition-colors group-hover:text-blue-600">9981543499</span>
+                                <span className="text-sm font-bold text-gray-900 tracking-tight transition-colors group-hover:text-blue-600">7698989392</span>
                             </motion.a>
 
                             <motion.a
@@ -97,7 +97,7 @@ export default function Footer() {
                                 <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500 shadow-sm">
                                     <Mail className="w-4 h-4" />
                                 </div>
-                                <span className="text-sm font-bold text-gray-900 transition-colors group-hover:text-blue-600 leading-none">contact@drinkit.com</span>
+                                <span className="text-sm font-bold text-gray-900 transition-colors group-hover:text-blue-600 leading-none">drinkit@gmail.com</span>
                             </motion.a>
 
                             <div className="flex items-start gap-4">

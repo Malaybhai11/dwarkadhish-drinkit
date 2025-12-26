@@ -94,7 +94,7 @@ export default function Navbar() {
                   </div>
                   <div className="flex flex-col">
                     <span className="text-[9px] font-bold text-gray-300 uppercase tracking-widest">Connect via Email</span>
-                    <a href="mailto:hello@drinkit.com" className="text-sm font-bold text-black hover:text-blue-600 transition-colors">hello@drinkit.com</a>
+                    <a href="mailto:hello@drinkit.com" className="text-sm font-bold text-black hover:text-blue-600 transition-colors">drinkit@gmail.com</a>
                   </div>
                 </div>
                 <div className="flex items-center gap-5">
@@ -103,7 +103,7 @@ export default function Navbar() {
                   </div>
                   <div className="flex flex-col">
                     <span className="text-[9px] font-bold text-gray-300 uppercase tracking-widest">Direct Line</span>
-                    <a href="tel:+15550000000" className="text-sm font-bold text-black hover:text-blue-600 transition-colors">+1 (555) 000-0000</a>
+                    <a href="tel:+15550000000" className="text-sm font-bold text-black hover:text-blue-600 transition-colors">7698989392</a>
                   </div>
                 </div>
               </div>
