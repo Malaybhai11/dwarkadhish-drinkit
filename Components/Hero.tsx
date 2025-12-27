@@ -1,109 +1,105 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, X, Mail, Phone, ChevronRight } from "lucide-react";
 
 export default function HeroSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isModalOpen]);
+
   return (
-    <section id="home" className="relative w-full h-screen overflow-hidden flex items-center">
-      {/* 
-        =========================================
-        1. CINEMATIC BACKGROUND 
-        =========================================
-      */}
+    <section
+      id="home"
+      className="relative w-full min-h-[100dvh] lg:h-screen overflow-hidden flex items-center"
+    >
+      {/* ================= 1. BACKGROUND ================= */}
       <div className="absolute inset-0 z-0 overflow-hidden bg-[#FAFAFA]">
-        {/* Hardware-Accelerated Cinematic Zoom Layer */}
         <motion.div
           initial={{ scale: 1.05 }}
           animate={{ scale: 1 }}
-          transition={{
-            duration: 20,
-            ease: [0.33, 1, 0.68, 1], // Custom slow ease out
-          }}
+          transition={{ duration: 20, ease: [0.33, 1, 0.68, 1] }}
           className="relative w-full h-full will-change-transform transform-gpu"
         >
           <img
             src="/Hero-bg.jpg"
             alt="Cinematic Hydration"
-            className="w-full h-full object-cover object-center scale-110 md:scale-105"
+            className="w-full h-full object-cover object-[73%_center] sm:object-[65%_center] lg:object-center scale-110 md:scale-105"
             loading="eager"
             {...({ fetchpriority: "high" } as any)}
           />
         </motion.div>
 
-        {/* Subtle Cinematic Noise (Masks artifacts and adds HD texture) */}
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay"
-          style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }} />
+        <div
+          className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          }}
+        />
 
-        {/* 
-          PREMIUM OVERLAY SYSTEM: 
-          We use zero blur to keep the HD details. 
-          The side mask ensures text readability while the vertical fade grounds the scene.
-        */}
         <div className="absolute inset-0 bg-linear-to-r from-white/95 via-white/20 to-transparent opacity-70 lg:opacity-80" />
         <div className="absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-transparent" />
       </div>
 
-      {/* 
-        =========================================
-        2. CONTENT LAYER
-        =========================================
-      */}
-      <div className="relative z-10 w-full px-8 lg:px-24 flex flex-col items-center lg:items-start text-center lg:text-left transform-gpu">
+      {/* ================= 2. CONTENT ================= */}
+      <div className="relative z-10 w-full px-4 sm:px-6 md:px-8 lg:px-24 flex flex-col items-center lg:items-start text-center lg:text-left transform-gpu py-8 sm:py-0">
         <div className="max-w-2xl">
-          {/* Eyebrow */}
           <motion.p
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="text-xs font-bold tracking-[0.3em] text-blue-600 uppercase mb-4"
+            transition={{ duration: 0.8 }}
+            className="text-[10px] sm:text-[11px] md:text-xs font-bold tracking-[0.25em] sm:tracking-[0.3em] text-blue-600 uppercase mb-3 sm:mb-4"
           >
             DRINK SMARTER
           </motion.p>
 
-          {/* Main Heading */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-4xl md:text-6xl font-extrabold text-black leading-[1.1] mb-6"
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-black leading-[1.1] mb-4 sm:mb-6"
           >
-            Hydration that fuels <br className="hidden md:block" /> your focus.
+            Hydration that fuels
+            <br className="hidden sm:block" /> your focus.
           </motion.h1>
 
-          {/* Subheading */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="text-base md:text-lg text-gray-500 font-light max-w-md mb-10 leading-relaxed"
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-sm sm:text-base md:text-lg text-black font-light max-w-md mx-auto lg:mx-0 mb-8 sm:mb-10 leading-relaxed px-4 sm:px-0"
           >
-            Premium water bottles engineered for people who don’t compromise on
+            Premium water bottles engineered for people who don't compromise on
             health, clarity, and performance.
           </motion.p>
 
-          {/* CTA Button */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full lg:w-auto"
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="w-full lg:w-auto px-4 sm:px-0"
           >
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => setIsModalOpen(true)}
-              className="group relative flex items-center justify-between lg:justify-start gap-4 bg-white border border-gray-100/50 text-black px-6 py-4 rounded-full shadow-md hover:shadow-xl hover:bg-gray-50 transition-all duration-300 w-full lg:w-max overflow-hidden"
+              className="group relative flex items-center justify-between gap-3 bg-white border border-gray-100/50 text-black px-5 sm:px-6 py-3 sm:py-4 rounded-full shadow-md hover:shadow-xl hover:bg-gray-50 transition-all duration-300 lg:w-max mx-auto lg:mx-0 "
             >
-              {/* Left Icon Bubble */}
-              <div className="relative flex items-center justify-center w-10 h-10 bg-blue-600 rounded-full transition-all duration-300 group-hover:scale-105">
-                <ChevronRight className="w-5 h-5 text-white transition-transform duration-300 group-hover:translate-x-1" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 bg-blue-600 rounded-full flex items-center justify-center shrink-0">
+                <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover:translate-x-1 transition" />
               </div>
-
-              <span className="font-semibold text-[15px] tracking-wide pr-4">
+              <span className="font-semibold text-sm sm:text-[15px] tracking-wide pr-2 sm:pr-4">
                 Contact Our Team
               </span>
             </motion.button>
@@ -111,59 +107,68 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* 
-        =========================================
-        3. CONTACT MODAL (Slide from Bottom)
-        =========================================
-      */}
+      {/* ================= 3. MODAL ================= */}
       <AnimatePresence>
         {isModalOpen && (
           <>
-            {/* Ultra-Smooth Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsModalOpen(false)}
-              className="fixed inset-0 bg-black/10 backdrop-blur-md z-100"
+              className="fixed inset-0 bg-black/10 backdrop-blur-md z-[90]"
             />
 
-            {/* Premium Editorial Drawer */}
             <motion.div
-              initial={{ y: "100%", opacity: 0.5 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: "100%", opacity: 0.5 }}
-              transition={{ type: "spring", damping: 30, stiffness: 220, mass: 0.8 }}
-              className="fixed bottom-0 left-0 right-0 h-[70dvh] md:h-[60vh] bg-white/80 backdrop-blur-3xl rounded-t-[56px] shadow-[0_-30px_100px_rgba(0,0,0,0.08)] z-110 border-t border-white/50 overflow-hidden"
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 30, stiffness: 220 }}
+              className="fixed bottom-0 left-0 right-0 h-[90dvh] sm:h-[85dvh] md:h-[75vh] lg:h-[60vh] bg-white/80 backdrop-blur-3xl rounded-t-[40px] sm:rounded-t-[56px] shadow-[0_-30px_100px_rgba(0,0,0,0.08)] z-[100] overflow-hidden"
             >
-              {/* Decorative Background Element */}
-              <div className="absolute top-0 right-0 w-1/2 h-full bg-linear-to-bl from-blue-50/50 to-transparent pointer-events-none" />
+              {/* Close Button */}
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="absolute top-4 right-4 sm:top-6 sm:right-6 p-3 sm:p-4 bg-gray-50 hover:bg-gray-100 rounded-full transition-colors z-10"
+              >
+                <X className="w-4 h-4 sm:w-5 sm:h-5" />
+              </button>
 
-              <div className="max-w-6xl mx-auto h-full px-8 lg:px-16 py-12 lg:py-20 flex flex-col relative">
-                {/* Drag / Close Handle */}
-                <div className="absolute top-6 left-1/2 -translate-x-1/2 w-16 h-1.5 bg-gray-200/50 rounded-full md:hidden" />
-
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start h-full">
-                  {/* Left Column: Primary Content */}
-                  <div className="lg:col-span-7 space-y-12">
+              {/* Modal Content */}
+              <div className="h-full overflow-y-auto px-4 sm:px-6 md:px-8 lg:px-12 py-8 sm:py-10 md:py-12">
+                <div className="max-w-4xl mx-auto">
+                  
+                  {/* Header */}
+                  <div className="mb-8 sm:mb-10 md:mb-12">
                     <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 }}
+                      className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6"
+                    >
+                      <span className="w-8 sm:w-12 h-px bg-blue-600" />
+                      <span className="text-[10px] sm:text-xs font-black uppercase tracking-[0.3em] sm:tracking-[0.4em] text-blue-600">
+                        Get In Touch
+                      </span>
+                    </motion.div>
+
+                    <motion.h2
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 }}
-                      className="space-y-4"
+                      className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-black leading-tight mb-3 sm:mb-4"
                     >
-                      <span className="text-[10px] font-bold tracking-[0.4em] text-blue-600 uppercase">Direct Access</span>
-                      <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black tracking-tight leading-[1.05]">
-                        Engineered for elite <br className="hidden md:block" /> performance.
-                      </h2>
-                    </motion.div>
+                      Let's start a <br className="hidden sm:block" />
+                      conversation
+                    </motion.h2>
 
-                    <motion.div
+                    <motion.p
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.3 }}
-                      className="grid grid-cols-1 md:grid-cols-2 gap-4"
+                      className="text-sm sm:text-base md:text-lg text-gray-500 font-light max-w-2xl"
                     >
+<<<<<<< Updated upstream
                       {[
                         { icon: Mail, label: "Email Correspondence", val: "drinkit@gmail.com", href: "mailto:drinkit@gmail.com" },
                         { icon: Phone, label: "Direct Support Line", val: "7698989392", href: "tel:7698989392" }
@@ -184,60 +189,93 @@ export default function HeroSection() {
                         </motion.a>
                       ))}
                     </motion.div>
+=======
+                      Our team is ready to help you find the perfect hydration solution for your lifestyle.
+                    </motion.p>
+>>>>>>> Stashed changes
                   </div>
 
-                  {/* Right Column: Brand Context */}
-                  <div className="lg:col-span-5 hidden lg:flex flex-col h-full justify-between items-end text-right">
-                    <motion.button
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
+                  {/* Contact Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-10 md:mb-12">
+                    
+                    {/* Email Card */}
+                    <motion.a
+                      href="mailto:hello@drinkit.com"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.4 }}
-                      onClick={() => setIsModalOpen(false)}
-                      className="group flex items-center gap-3 py-2 px-4 rounded-full bg-gray-50 hover:bg-gray-100 transition-colors border border-gray-100"
+                      whileHover={{ y: -8, scale: 1.02 }}
+                      className="group relative p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] bg-white border border-gray-100/50 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] transition-all duration-500 overflow-hidden"
                     >
-                      <span className="text-[10px] font-bold tracking-tighter text-gray-400 group-hover:text-black transition-colors uppercase">Dismiss Escape key</span>
-                      <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center shadow-xs">
-                        <X className="w-3 h-3 text-black" />
-                      </div>
-                    </motion.button>
-
-                    <motion.div
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.5 }}
-                      className="space-y-8"
-                    >
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-end gap-2 mb-2">
-                          <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                          </span>
-                          <p className="text-[10px] font-bold text-green-600 uppercase tracking-widest">Consultants Online</p>
+                      <div className="absolute -top-16 -right-16 sm:-top-24 sm:-right-24 w-32 h-32 sm:w-48 sm:h-48 bg-linear-to-br from-blue-500/10 to-blue-600/5 blur-3xl group-hover:scale-150 transition-transform duration-700" />
+                      
+                      <div className="relative z-10">
+                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-linear-to-br from-blue-500/10 to-blue-600/5 flex items-center justify-center mb-4 sm:mb-6 group-hover:rotate-12 transition-transform duration-500">
+                          <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
                         </div>
-                        <p className="text-gray-400 text-sm font-medium leading-relaxed max-w-[240px] ml-auto">
-                          Our hydration engineers are currently processing requests. Expect a response within 2 hours.
-                        </p>
-                      </div>
 
-                      <div className="pt-8 border-t border-gray-100 flex flex-col items-end">
-                        <p className="text-[10px] font-black text-black tracking-[0.6em] mb-4 uppercase">DRINK IT</p>
-                        <p className="text-[11px] text-gray-400 leading-tight">
-                          Jamnagar <br /> Gujarat, India
+                        <h3 className="text-lg sm:text-xl font-bold text-black mb-2 sm:mb-3 group-hover:text-blue-600 transition-colors">
+                          Email Us
+                        </h3>
+
+                        <p className="text-sm text-gray-500 font-medium mb-4 sm:mb-6">
+                          Drop us a line anytime
                         </p>
+
+                        <div className="flex items-center gap-2 text-sm font-bold text-blue-600">
+                          <span>hello@drinkit.com</span>
+                          <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                        </div>
                       </div>
-                    </motion.div>
+                    </motion.a>
+
+                    {/* Phone Card */}
+                    <motion.a
+                      href="tel:+1234567890"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
+                      whileHover={{ y: -8, scale: 1.02 }}
+                      className="group relative p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] bg-white border border-gray-100/50 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] transition-all duration-500 overflow-hidden"
+                    >
+                      <div className="absolute -top-16 -right-16 sm:-top-24 sm:-right-24 w-32 h-32 sm:w-48 sm:h-48 bg-linear-to-br from-teal-500/10 to-teal-600/5 blur-3xl group-hover:scale-150 transition-transform duration-700" />
+                      
+                      <div className="relative z-10">
+                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-linear-to-br from-teal-500/10 to-teal-600/5 flex items-center justify-center mb-4 sm:mb-6 group-hover:rotate-12 transition-transform duration-500">
+                          <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-teal-600" />
+                        </div>
+
+                        <h3 className="text-lg sm:text-xl font-bold text-black mb-2 sm:mb-3 group-hover:text-teal-600 transition-colors">
+                          Call Us
+                        </h3>
+
+                        <p className="text-sm text-gray-500 font-medium mb-4 sm:mb-6">
+                          Available Mon-Fri, 9AM-6PM
+                        </p>
+
+                        <div className="flex items-center gap-2 text-sm font-bold text-teal-600">
+                          <span>+1 (234) 567-890</span>
+                          <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                        </div>
+                      </div>
+                    </motion.a>
+
                   </div>
+
+                  {/* Additional Info */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                    className="text-center p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] bg-gray-50 border border-gray-100"
+                  >
+                    <p className="text-xs sm:text-sm text-gray-400 font-medium">
+                      Response time: <span className="text-gray-600 font-bold">Within 24 hours</span>
+                    </p>
+                  </motion.div>
+
                 </div>
               </div>
-
-              {/* Mobile Close Button (Floating) */}
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="absolute top-8 right-8 md:hidden p-4 bg-gray-50 rounded-full"
-              >
-                <X className="w-5 h-5 text-black" />
-              </button>
             </motion.div>
           </>
         )}
