@@ -6,7 +6,7 @@ import { ArrowRight, Shield, Heart, Globe, Droplets, CheckCircle2, Award, Zap, B
 import Image from "next/image";
 
 const GroupAndDonation = () => {
-    const donationData = [
+    const donationData =git  [
         {
             size: "200 ml",
             amount: "₹0.11",
