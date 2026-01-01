@@ -63,7 +63,7 @@ export default function Footer() {
                     <div className="space-y-8">
                         <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em]">Our Range</h4>
                         <ul className="space-y-4">
-                            {['250ml Premium', '500ml Active', '1 Litre Standard', '2 Litre Family', '5 Litre Jar', '20 Litre Enterprise'].map((item) => (
+                            {['250ml Premium', '500ml Active', '1 Litre Standard'].map((item) => (
                                 <li key={item}>
                                     <Link href="#" className="group flex items-center gap-3 text-gray-600 hover:text-blue-600 transition-all duration-300">
                                         <div className="w-0 h-px bg-blue-600 transition-all duration-500 group-hover:w-5" />
@@ -105,7 +105,7 @@ export default function Footer() {
                                     <MapPin className="w-4 h-4" />
                                 </div>
                                 <span className="text-[13px] text-gray-500 font-medium leading-relaxed pt-1">
-                                    Owned by Naga bhai Gojiya<br />Serving Across India
+                                    Owned by N.N Gojiya<br />Serving Across India
                                 </span>
                             </div>
                         </div>
