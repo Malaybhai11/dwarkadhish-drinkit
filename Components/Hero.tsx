@@ -168,31 +168,9 @@ export default function HeroSection() {
                       transition={{ delay: 0.3 }}
                       className="text-sm sm:text-base md:text-lg text-gray-500 font-light max-w-2xl"
                     >
-<<<<<<< Updated upstream
-                      {[
-                        { icon: Mail, label: "Email Correspondence", val: "drinkit@gmail.com", href: "mailto:drinkit@gmail.com" },
-                        { icon: Phone, label: "Direct Support Line", val: "7698989392", href: "tel:7698989392" }
-                      ].map((item, i) => (
-                        <motion.a
-                          key={i}
-                          href={item.href}
-                          whileHover={{ y: -4, backgroundColor: "rgba(255,255,255,1)" }}
-                          className="group p-6 rounded-[24px] bg-white/40 border border-white/60 shadow-[0_4px_12px_rgba(0,0,0,0.02)] transition-all duration-300 flex flex-col gap-6"
-                        >
-                          <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center transition-transform group-hover:scale-110 group-hover:rotate-12">
-                            <item.icon className="w-4 h-4 text-white" />
-                          </div>
-                          <div>
-                            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">{item.label}</p>
-                            <p className="text-lg font-bold text-black group-hover:text-blue-600 transition-colors  tracking-tight">{item.val}</p>
-                          </div>
-                        </motion.a>
-                      ))}
-                    </motion.div>
-=======
                       Our team is ready to help you find the perfect hydration solution for your lifestyle.
                     </motion.p>
->>>>>>> Stashed changes
+
                   </div>
 
                   {/* Contact Grid */}

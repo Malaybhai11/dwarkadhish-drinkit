@@ -112,36 +112,21 @@ const AboutUs = () => {
                         viewport={{ once: true }}
                         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                         className="relative"
-                    >
-<<<<<<< Updated upstream
-                        <div className="relative rounded-[3rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] aspect-square lg:aspect-auto lg:h-[700px] bg-linear-to-br from-blue-50 via-white to-blue-50/30 flex items-center justify-center p-12">
-                            <motion.img
-                                initial={{ y: 20, opacity: 0 }}
-                                whileInView={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.2, duration: 0.8 }}
-                                src="/3imgs_bg_removed.png.png"
-=======
-                        <div className="relative rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(0,0,0,0.15)] md:shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] aspect-square lg:aspect-auto lg:h-[700px]">
-                            <img
-                                src="/about-splash.png"
->>>>>>> Stashed changes
-                                alt="Pure Water Essence"
-                                className="w-full h-full object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.1)]"
-                            />
+>
+    <div className="relative rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(0,0,0,0.15)] md:shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] aspect-square lg:aspect-auto lg:h-[700px]">
+        <img
+            src="/about-splash.png"
+            alt="Pure Water Essence"
+            className="w-full h-full object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.1)]"
+        />
 
-                            {/* Floating ID Card / Stat */}
-                            <motion.div
-                                animate={{ y: [0, -20, 0] }}
-                                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-<<<<<<< Updated upstream
-                                className="absolute bottom-12 left-12 right-12 bg-white/40 backdrop-blur-2xl border border-white/40 p-8 rounded-3xl shadow-xl"
-                            >
-                                <div className="flex justify-between items-center text-blue-900">
-=======
-                                className="absolute bottom-6 left-6 right-6 md:bottom-12 md:left-12 md:right-12 bg-white/10 backdrop-blur-2xl border border-white/20 p-4 md:p-8 rounded-2xl md:rounded-3xl"
-                            >
-                                <div className="flex justify-between items-center text-white gap-2">
->>>>>>> Stashed changes
+        {/* Floating ID Card / Stat */}
+        <motion.div
+            animate={{ y: [0, -20, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute bottom-6 left-6 right-6 md:bottom-12 md:left-12 md:right-12 bg-white/10 backdrop-blur-2xl border border-white/20 p-4 md:p-8 rounded-2xl md:rounded-3xl"
+        >
+            <div className="flex justify-between items-center text-white gap-2">
                                     {stats.map((stat, i) => (
                                         <div key={i} className="text-center flex-1">
                                             <p className="text-[8px] md:text-[10px] font-bold uppercase tracking-wider md:tracking-widest opacity-60 mb-0.5 md:mb-1">{stat.label}</p>
@@ -159,54 +144,48 @@ const AboutUs = () => {
                 </div>
 
                 {/* Section 2: Features Grid */}
-                <div className="relative">
-                    <div className="text-center max-w-2xl mx-auto mb-12 md:mb-20">
-                        <h3 className="text-[10px] md:text-sm font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-blue-600 mb-3 md:mb-4">The Pillars</h3>
-                        <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-black">Why the world trusts Drink-It</h2>
+<div className="relative">
+    <div className="text-center max-w-2xl mx-auto mb-12 md:mb-20">
+        <h3 className="text-[10px] md:text-sm font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-blue-600 mb-3 md:mb-4">The Pillars</h3>
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-black">Why the world trusts Drink-It</h2>
+    </div>
+
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
+        {features.map((feature, index) => (
+            <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -12 }}
+                className={`group relative p-6 md:p-8 lg:p-10 rounded-[2rem] md:rounded-[2.5rem] bg-white border ${feature.border} shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] transition-all duration-500 overflow-hidden`}
+            >
+                {/* Background Accent */}
+                <div className={`absolute -top-16 -right-16 md:-top-24 md:-right-24 w-32 h-32 md:w-48 md:h-48 bg-linear-to-br ${feature.color} blur-3xl group-hover:scale-150 transition-transform duration-700`} />
+
+                <div className="relative z-10">
+                    <div className={`w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-linear-to-br ${feature.color} flex items-center justify-center mb-6 md:mb-8 group-hover:rotate-15 transition-transform duration-500`}>
+                        <feature.icon className={`w-6 h-6 md:w-7 md:h-7 ${feature.iconColor}`} />
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
-                        {features.map((feature, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.5, delay: index * 0.1 }}
-                                whileHover={{ y: -12 }}
-                                className={`group relative p-6 md:p-8 lg:p-10 rounded-[2rem] md:rounded-[2.5rem] bg-white border ${feature.border} shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] transition-all duration-500 overflow-hidden`}
-                            >
-                                {/* Background Accent */}
-                                <div className={`absolute -top-16 -right-16 md:-top-24 md:-right-24 w-32 h-32 md:w-48 md:h-48 bg-linear-to-br ${feature.color} blur-3xl group-hover:scale-150 transition-transform duration-700`} />
+                    <h4 className="text-lg md:text-xl font-bold text-black mb-3 md:mb-4 group-hover:text-blue-600 transition-colors">
+                        {feature.title}
+                    </h4>
 
-                                <div className="relative z-10">
-                                    <div className={`w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-linear-to-br ${feature.color} flex items-center justify-center mb-6 md:mb-8 group-hover:rotate-15 transition-transform duration-500`}>
-                                        <feature.icon className={`w-6 h-6 md:w-7 md:h-7 ${feature.iconColor}`} />
-                                    </div>
+                    <p className="text-gray-500 font-medium text-sm leading-relaxed mb-6 md:mb-8">
+                        {feature.description}
+                    </p>
 
-                                    <h4 className="text-lg md:text-xl font-bold text-black mb-3 md:mb-4 group-hover:text-blue-600 transition-colors">
-                                        {feature.title}
-                                    </h4>
-
-                                    <p className="text-gray-500 font-medium text-sm leading-relaxed mb-6 md:mb-8">
-                                        {feature.description}
-                                    </p>
-
-                                    <div className="flex items-center gap-2 text-[9px] md:text-[10px] font-black uppercase tracking-wider md:tracking-widest text-gray-300 group-hover:text-blue-600/40 transition-colors">
-                                        <span className="w-4 md:w-6 h-px bg-current" />
-                                        Premium Grade
-                                    </div>
-                                </div>
-                            </motion.div>
-                        ))}
+                    <div className="flex items-center gap-2 text-[9px] md:text-[10px] font-black uppercase tracking-wider md:tracking-widest text-gray-300 group-hover:text-blue-600/40 transition-colors">
+                        <span className="w-4 md:w-6 h-px bg-current" />
+                        Premium Grade
                     </div>
                 </div>
-
-<<<<<<< Updated upstream
-
-
-=======
->>>>>>> Stashed changes
+            </motion.div>
+        ))}
+    </div>
+</div>
             </div>
         </section>
     );
