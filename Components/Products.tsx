@@ -11,7 +11,9 @@ import {
     Check,
     Zap,
     ShieldCheck,
-    TrendingUp
+    TrendingUp,
+    Heart,
+    CheckCircle2
 } from "lucide-react";
 
 // ─────────────────────────────────────────────────────────────
@@ -28,6 +30,7 @@ type Product = {
     details: string;
     specs: { icon: any; label: string; value: string }[];
     description_long: string;
+    donation: string;
 };
 
 const PRODUCTS: Product[] = [
@@ -35,7 +38,7 @@ const PRODUCTS: Product[] = [
         id: "1ltr",
         name: "Eco-Titan 1L",
         category: "Performance",
-        price: 2000,
+        price: 20,
         image: "/1ltr_bg_removed.png.png",
         tag: "Best Seller",
         details: "Ultimate capacity for long-duration hydration and peak performance.",
@@ -44,13 +47,14 @@ const PRODUCTS: Product[] = [
             { icon: Zap, label: "Cooling", value: "36h Cold" },
             { icon: ShieldCheck, label: "Built", value: "Armor Steel" },
             { icon: TrendingUp, label: "Volume", value: "1000ml" }
-        ]
+        ],
+        donation: "₹0.21"
     },
     {
         id: "500ml",
         name: "Urban Flow 500ml",
         category: "Everyday",
-        price: 1200,
+        price: 10,
         image: "/500ml_bg_removed.png.png",
         tag: "Perfect Fit",
         details: "The definitive companion for your high-intensity urban workflow.",
@@ -59,13 +63,14 @@ const PRODUCTS: Product[] = [
             { icon: Zap, label: "Coating", value: "Grip-Max" },
             { icon: ShieldCheck, label: "Steel", value: "316 Pro" },
             { icon: TrendingUp, label: "Volume", value: "500ml" }
-        ]
+        ],
+        donation: "₹0.11"
     },
     {
         id: "200ml",
         name: "Pocket Hydrate 200ml",
         category: "Compact",
-        price: 800,
+        price: 5,
         image: "/200ml_bg_removed.png.png",
         tag: "Travel Lite",
         details: "Zero-mass philosophy. Essential hydration at a fraction of the weight.",
@@ -74,7 +79,8 @@ const PRODUCTS: Product[] = [
             { icon: Zap, label: "Weight", value: "120g" },
             { icon: ShieldCheck, label: "Grade", value: "Ultra-Light" },
             { icon: TrendingUp, label: "Volume", value: "200ml" }
-        ]
+        ],
+        donation: "₹0.11"
     }
 ];
 
@@ -177,16 +183,31 @@ const ProductCard = ({ product, priority, onOpen }: { product: Product; priority
                 </div>
             </motion.div>
 
-            <div className="flex justify-between items-end px-2 md:px-4">
+            <div className="flex justify-between items-end px-2 md:px-4 mb-3 md:mb-4">
                 <div className="space-y-0.5 md:space-y-1">
                     <p className="text-[8px] md:text-[10px] font-bold text-blue-600 uppercase tracking-[0.2em] md:tracking-[0.3em] font-sans">{product.category}</p>
                     <h3 className="text-lg md:text-2xl font-bold text-black tracking-tighter leading-none">{product.name}</h3>
                 </div>
                 <div className="text-right">
-                    <p className="text-xs md:text-sm font-bold text-gray-300 line-through tracking-tighter mb-0.5">₹{(product.price + 600).toLocaleString()}</p>
                     <p className="text-base md:text-xl font-black text-black tracking-tighter leading-none">₹{product.price.toLocaleString()}</p>
                 </div>
             </div>
+
+            {/* Donation Badge */}
+            <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="mx-2 md:mx-4 px-3 md:px-4 py-2 md:py-3 rounded-xl bg-blue-50/80 border border-blue-100/50 flex items-center gap-2 md:gap-3"
+            >
+                <Heart className="w-5 h-5 md:w-5 md:h-5 text-blue-600 fill-blue-600" />
+                <div className="flex-1 min-w-0">
+                    <p className="text-[10px] md:text-[10px] font-black text-blue-600 uppercase tracking-widest leading-none">Donation</p>
+                    <p className="text-xs md:text-sm font-bold text-gray-700 leading-tight">{product.donation} to Clean Water</p>
+                    <p className="text-[11px] md:text-[11px] font-semibold text-gray-500 leading-tight">by Rithumas Foundation</p>
+                </div>
+            </motion.div>
         </motion.div>
     );
 };
@@ -210,15 +231,18 @@ export default function ProductSection() {
         setTimeout(() => setAdded(false), 2000);
     };
 
-    // Prevent body scroll when modal is open
+    // Prevent body scroll when modal is open and hide navbar
     useEffect(() => {
         if (selectedProduct) {
             document.body.style.overflow = 'hidden';
+            document.body.classList.add('modal-open');
         } else {
             document.body.style.overflow = 'unset';
+            document.body.classList.remove('modal-open');
         }
         return () => {
             document.body.style.overflow = 'unset';
+            document.body.classList.remove('modal-open');
         };
     }, [selectedProduct]);
 
@@ -344,7 +368,7 @@ export default function ProductSection() {
                                     </div>
 
                                     {/* Exit Hook (Mobile) */}
-                                    <button onClick={() => setSelectedProduct(null)} className="md:hidden absolute top-6 right-6 p-3 bg-white/80 backdrop-blur-xl rounded-full z-50 shadow-lg">
+                                    <button onClick={() => setSelectedProduct(null)} className="md:hidden absolute top-8 right-8 p-3 bg-white/80 backdrop-blur-xl rounded-full z-50 shadow-lg">
                                         <X className="w-5 h-5 text-black" />
                                     </button>
                                 </div>
@@ -387,7 +411,7 @@ export default function ProductSection() {
                                             </div>
 
                                             {/* Specification Engine */}
-                                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 py-6 md:py-10 border-y border-gray-100">
+                                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 py-6 md:py-10 border-t border-gray-100">
                                                 {selectedProduct.specs.map((spec, i) => (
                                                     <div key={i} className="flex flex-col gap-1">
                                                         <div className="flex items-center gap-2 md:gap-3 mb-1 md:mb-2 text-gray-400">
@@ -401,49 +425,38 @@ export default function ProductSection() {
                                                 ))}
                                             </div>
 
-                                            {/* Execution Row */}
-                                            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 md:gap-8 pt-4 md:pt-8">
-                                                {/* Precision Stepper */}
-                                                <div className="flex items-center justify-center bg-gray-50 rounded-full px-4 py-3 md:px-6 md:py-4 w-full sm:w-auto border border-gray-100 shadow-sm">
-                                                    <motion.button whileTap={{ scale: 0.8 }} onClick={() => setQuantity(q => Math.max(1, q - 1))} className="p-2 text-gray-400 hover:text-blue-600 transition-colors"><Minus size={16} /></motion.button>
-                                                    <span className="w-12 md:w-16 text-center font-black text-lg md:text-xl tracking-tighter text-black">{quantity}</span>
-                                                    <motion.button whileTap={{ scale: 0.8 }} onClick={() => setQuantity(q => q + 1)} className="p-2 text-gray-400 hover:text-blue-600 transition-colors"><Plus size={16} /></motion.button>
+                                            {/* Donation Impact Section */}
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 20 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{ delay: 0.5 }}
+                                                className="bg-blue-50/50 border border-blue-100 rounded-2xl md:rounded-3xl p-6 md:p-8 space-y-4 md:space-y-6"
+                                            >
+                                                <div className="flex items-center gap-3 md:gap-4">
+                                                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-blue-600 flex items-center justify-center">
+                                                        <Heart className="w-5 h-5 md:w-6 md:h-6 text-white fill-white" />
+                                                    </div>
+                                                    <div className="flex-1">
+                                                        <p className="text-[9px] md:text-[10px] font-black text-blue-600 uppercase tracking-widest mb-1">Social Impact</p>
+                                                        <p className="text-sm md:text-base font-bold text-black">Donation to Clean Water Initiative</p>
+                                                    </div>
                                                 </div>
-
-                                                {/* Core CTA */}
-                                                <button
-                                                    onClick={handleAdd}
-                                                    disabled={added}
-                                                    className={`group relative grow h-[64px] md:h-[80px] rounded-full overflow-hidden transition-all duration-700
-                                                    ${added ? "bg-green-600 scale-[0.98]" : "bg-black hover:bg-blue-600 shadow-2xl shadow-black/20"}`}
-                                                >
-                                                    <AnimatePresence mode="wait">
-                                                        {added ? (
-                                                            <motion.div
-                                                                key="added"
-                                                                initial={{ opacity: 0, y: 10 }}
-                                                                animate={{ opacity: 1, y: 0 }}
-                                                                className="absolute inset-0 flex items-center justify-center gap-2 md:gap-3 text-white font-black uppercase tracking-widest text-sm md:text-base font-bold"
-                                                            >
-                                                                <Check size={18} className="md:w-5 md:h-5" /> Identity Stored
-                                                            </motion.div>
-                                                        ) : (
-                                                            <motion.div
-                                                                key="normal"
-                                                                initial={{ opacity: 0 }}
-                                                                animate={{ opacity: 1 }}
-                                                                className="absolute inset-0 flex items-center justify-between px-6 md:px-10 text-white"
-                                                            >
-                                                                <div className="flex flex-col items-start leading-none">
-                                                                    <span className="text-[9px] md:text-[10px] font-black tracking-[0.4em] opacity-40 uppercase mb-1 font-bold">Secure Transaction</span>
-                                                                    <span className="text-lg md:text-2xl font-black tracking-tighter uppercase whitespace-nowrap">Acquire — ₹{(selectedProduct.price * quantity).toLocaleString()}</span>
-                                                                </div>
-                                                                <ArrowRight className="w-5 h-5 md:w-6 md:h-6 transition-transform group-hover:translate-x-2" />
-                                                            </motion.div>
-                                                        )}
-                                                    </AnimatePresence>
-                                                </button>
-                                            </div>
+                                                <div className="flex items-end justify-between pt-4 border-t border-blue-100">
+                                                    <div>
+                                                        <p className="text-[9px] md:text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">Per Purchase Donation</p>
+                                                        <p className="text-2xl md:text-3xl font-black text-blue-600 tracking-tight">{selectedProduct.donation}</p>
+                                                    </div>
+                                                    <div className="text-right">
+                                                        <div className="flex items-center gap-2 text-blue-600 mb-2">
+                                                            <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5" />
+                                                            <span className="text-[9px] md:text-[10px] font-black uppercase tracking-tight">Blockchain Verified</span>
+                                                        </div>
+                                                        <p className="text-[8px] md:text-[9px] text-gray-500 font-medium leading-tight max-w-[140px] md:max-w-[180px]">
+                                                            Managed by <span className="font-bold text-gray-700">Rithumas Foundation</span> transparency records.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </motion.div>
 
                                             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 md:gap-4 text-gray-300 pt-2 md:pt-4">
                                                 <div className="flex items-center gap-1.5 md:gap-2">

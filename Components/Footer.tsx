@@ -1,6 +1,8 @@
 "use client";
 
-import { Phone, Mail, MapPin, Facebook, Twitter, Instagram, Send, ArrowRight } from 'lucide-react';
+import { Phone, Mail, MapPin, Instagram, Send, ArrowRight } from 'lucide-react';
+import { FaWhatsapp } from "react-icons/fa";
+import { BiLogoGmail } from "react-icons/bi";
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
@@ -28,9 +30,9 @@ export default function Footer() {
 
                         <div className="flex gap-4">
                             {[
-                                { icon: Facebook, href: "#" },
-                                { icon: Instagram, href: "#" },
-                                { icon: Twitter, href: "#" }
+                                { icon: Instagram, href: "https://www.instagram.com/dwarkadhish_paper_products?igsh=MW45cWFicTdlZGJjZw==" },
+                                { icon: FaWhatsapp, href: "https://wa.me/919981543499" },
+                                { icon: BiLogoGmail, href: "mailto:dwarkadhishpaperproducts@gmail.com" }
                             ].map((social, i) => (
                                 <motion.a
                                     key={i}

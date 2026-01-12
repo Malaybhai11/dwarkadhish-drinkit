@@ -4,7 +4,7 @@ import Navbar from "@/Components/Nav-bar";
 import HeroSection from "@/Components/Hero";
 import ProductSection from "@/Components/Products";
 import AboutUs from "@/Components/About-us";
-import GroupAndDonation from "@/Components/groupanddonation";
+import GroupAndDonation from "@/Components/group";
 import Footer from "@/Components/Footer";
 
 export default function Home() {

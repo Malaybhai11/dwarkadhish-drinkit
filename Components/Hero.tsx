@@ -7,15 +7,18 @@ import { ArrowRight, X, Mail, Phone, ChevronRight } from "lucide-react";
 export default function HeroSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Prevent body scroll when modal is open
+  // Prevent body scroll when modal is open and hide navbar
   useEffect(() => {
     if (isModalOpen) {
       document.body.style.overflow = 'hidden';
+      document.body.classList.add('modal-open');
     } else {
       document.body.style.overflow = 'unset';
+      document.body.classList.remove('modal-open');
     }
     return () => {
       document.body.style.overflow = 'unset';
+      document.body.classList.remove('modal-open');
     };
   }, [isModalOpen]);
 
@@ -35,10 +38,20 @@ export default function HeroSection() {
           <img
             src="/Hero-bg.jpg"
             alt="Cinematic Hydration"
-            className="w-full h-full object-cover object-[73%_center] sm:object-[65%_center] lg:object-center scale-110 md:scale-105"
+            className="w-full h-full object-cover object-center min-h-screen"
             loading="eager"
             {...({ fetchpriority: "high" } as any)}
           />
+          {/* Mobile BG-img */}
+          <div className="absolute inset-0 lg:hidden w-full h-full object-cover object-center min-h-screen">
+            <img
+              src="/mobile-hero-img.jpg"
+              alt="Cinematic Hydration"
+              className="w-full h-full object-cover object-center min-h-screen"
+              loading="eager"
+              {...({ fetchpriority: "high" } as any)}
+            />
+          </div>
         </motion.div>
 
         <div
@@ -129,7 +142,7 @@ export default function HeroSection() {
               {/* Close Button */}
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="absolute top-4 right-4 sm:top-6 sm:right-6 p-3 sm:p-4 bg-gray-50 hover:bg-gray-100 rounded-full transition-colors z-10"
+                className="absolute top-6 right-6 sm:top-8 sm:right-8 p-3 sm:p-4 bg-gray-50 hover:bg-gray-100 rounded-full transition-colors z-10"
               >
                 <X className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
@@ -137,7 +150,7 @@ export default function HeroSection() {
               {/* Modal Content */}
               <div className="h-full overflow-y-auto px-4 sm:px-6 md:px-8 lg:px-12 py-8 sm:py-10 md:py-12">
                 <div className="max-w-4xl mx-auto">
-                  
+
                   {/* Header */}
                   <div className="mb-8 sm:mb-10 md:mb-12">
                     <motion.div
@@ -175,7 +188,7 @@ export default function HeroSection() {
 
                   {/* Contact Grid */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-10 md:mb-12">
-                    
+
                     {/* Email Card */}
                     <motion.a
                       href="mailto:hello@drinkit.com"
@@ -186,7 +199,7 @@ export default function HeroSection() {
                       className="group relative p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] bg-white border border-gray-100/50 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] transition-all duration-500 overflow-hidden"
                     >
                       <div className="absolute -top-16 -right-16 sm:-top-24 sm:-right-24 w-32 h-32 sm:w-48 sm:h-48 bg-linear-to-br from-blue-500/10 to-blue-600/5 blur-3xl group-hover:scale-150 transition-transform duration-700" />
-                      
+
                       <div className="relative z-10">
                         <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-linear-to-br from-blue-500/10 to-blue-600/5 flex items-center justify-center mb-4 sm:mb-6 group-hover:rotate-12 transition-transform duration-500">
                           <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
@@ -209,7 +222,7 @@ export default function HeroSection() {
 
                     {/* Phone Card */}
                     <motion.a
-                      href="tel:+1234567890"
+                      href="tel:+7698989392"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.5 }}
@@ -217,7 +230,7 @@ export default function HeroSection() {
                       className="group relative p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] bg-white border border-gray-100/50 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] transition-all duration-500 overflow-hidden"
                     >
                       <div className="absolute -top-16 -right-16 sm:-top-24 sm:-right-24 w-32 h-32 sm:w-48 sm:h-48 bg-linear-to-br from-teal-500/10 to-teal-600/5 blur-3xl group-hover:scale-150 transition-transform duration-700" />
-                      
+
                       <div className="relative z-10">
                         <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-linear-to-br from-teal-500/10 to-teal-600/5 flex items-center justify-center mb-4 sm:mb-6 group-hover:rotate-12 transition-transform duration-500">
                           <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-teal-600" />
@@ -232,7 +245,7 @@ export default function HeroSection() {
                         </p>
 
                         <div className="flex items-center gap-2 text-sm font-bold text-teal-600">
-                          <span>+1 (234) 567-890</span>
+                          <span>+91 7698989392</span>
                           <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
                         </div>
                       </div>

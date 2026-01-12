@@ -14,13 +14,29 @@ function cn(...inputs: ClassValue[]) {
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showContact, setShowContact] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
+    
+    // Check if modal is open
+    const checkModalOpen = () => {
+      setIsModalOpen(document.body.classList.contains('modal-open'));
+    };
+    
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    
+    // Check modal state on component mount and when it might change
+    checkModalOpen();
+    const observer = new MutationObserver(checkModalOpen);
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      observer.disconnect();
+    };
   }, []);
 
   const handleHomeClick = (e: React.MouseEvent) => {
@@ -39,6 +55,7 @@ export default function Navbar() {
     <nav
       className={cn(
         "fixed top-0 left-0 right-0 z-[200] transition-all duration-500 bg-white border-b",
+        isModalOpen ? "hidden" : "",
         isScrolled
           ? "py-3 shadow-sm border-gray-100"
           : "py-5 border-transparent"
